@@ -31,7 +31,8 @@ public class Player1 {
      //foratin - Forat de la peça a colocar -> 	0 = No  	1 = Si
      //tamanyin - Forat de la peça a colocar -> 0 = Petit 	1 = Gran
         
-        updateState();
+        int numericPlayPiece = colorin*8+formain*4+foratin*2+tamanyin;
+        updateState(numericPlayPiece);
         int x,y,color,forma,forat,tamany;
         color=-1;
         forma=-1;
@@ -84,23 +85,12 @@ public class Player1 {
     
     private void initializePieces(){
        
-        _availables.add(new Piece(0,0,0,1));
-        _availables.add(new Piece(0,0,1,0));
-        _availables.add(new Piece(0,0,1,1));
-        _availables.add(new Piece(0,1,0,0));
-        _availables.add(new Piece(0,1,0,1));
-        _availables.add(new Piece(0,1,1,0));
-        _availables.add(new Piece(0,1,1,1));
-        _availables.add(new Piece(1,0,0,1));
-        _availables.add(new Piece(1,0,1,0));
-        _availables.add(new Piece(1,0,1,1));
-        _availables.add(new Piece(1,1,0,0));
-        _availables.add(new Piece(1,1,0,1));
-        _availables.add(new Piece(1,1,1,0));
-        _availables.add(new Piece(1,1,1,1));
+        for(int i=0;i<Piece.LIMIT;i++){
+            _availables.add(new Piece(i));
+        }
     }
     
-    private void updateState(){
+    private void updateState(int piece){
         //si la peça que li he donat es null he de trobar la primera que ha posat ell, si no buscare on ha posat
         int x=0, y=0;
         while(x < meutaulell.getX() && y < meutaulell.getY() && meutaulell.getpos(x,y)==-1 && 
@@ -113,14 +103,20 @@ public class Player1 {
         
         if (x < meutaulell.getX() && y < meutaulell.getY()){
             if (_givenPiece == null){
+                /*
                 String binary = String.format("%04d", new BigInteger(Integer.toBinaryString(meutaulell.getpos(x,y))));
                 _givenPiece = new Piece(Character.getNumericValue(binary.charAt(0)),
                                         Character.getNumericValue(binary.charAt(1)),
                                         Character.getNumericValue(binary.charAt(2)),
                                         Character.getNumericValue(binary.charAt(3)));
-               
+               */
+                _givenPiece = new Piece(meutaulell.getpos(x, y));
             }
             _availables.remove(_givenPiece);
+            
+        }
+        if(_root == null){
+            _root = new Node(new Board());
         }
     }
 }
