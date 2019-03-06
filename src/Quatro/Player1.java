@@ -15,11 +15,14 @@ public class Player1 {
     
     private Piece _givenPiece;
     
+    private Node _root;
+    
     Player1(Tauler entrada){
         meutaulell = entrada;
         _availables = new ArrayList();
         initializePieces();
-        _givenPiece = null;                             
+        _givenPiece = null;        
+        _root= null;
        
     }
     public int[] tirada(int colorin, int formain, int foratin, int tamanyin){
@@ -115,6 +118,7 @@ public class Player1 {
                                         Character.getNumericValue(binary.charAt(1)),
                                         Character.getNumericValue(binary.charAt(2)),
                                         Character.getNumericValue(binary.charAt(3)));
+               
             }
             _availables.remove(_givenPiece);
         }

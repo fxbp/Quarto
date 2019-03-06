@@ -12,6 +12,13 @@ public class Piece {
     private int _hole;
     private int _shape;
     
+    public Piece(){
+        _color=0;
+        _size=0;
+        _hole=0;
+        _shape=-1;
+    }
+    
     public Piece(int color, int shape, int hole, int size){
         _color = color;
         _size = size;
