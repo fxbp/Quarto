@@ -5,7 +5,6 @@
  */
 package Quatro;
 
-import java.util.List;
 
 /**
  *
@@ -27,13 +26,13 @@ public class MiniMax {
         if (actualDepth == depthToReach) 
             return actual.heuristic();
         
-        actual.genereteChild();
+        actual.generateChild();
         if (!actual.hasChild())
             return actual.heuristic();
         
         int best;
         if(actual.isMax()){
-            best =0;
+            best =-1;
             for(Node n : actual.getChild()){
                 int value = eval(n,actualDepth+1,depthToReach);
                 if (value > best){

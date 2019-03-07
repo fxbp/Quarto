@@ -6,6 +6,7 @@
 package Quatro;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,8 +22,8 @@ public class Node {
     private List<Node> _child;  
     private Board _board;
     
-    public Node(Board board){
-        this(-1,-1,true,null, board);
+    public Node(Piece p, Board board){
+        this(-1,-1,true,p, board);
     }
     
     public Node(int x, int y, boolean max, Piece p, Board board){
@@ -46,10 +47,47 @@ public class Node {
     public List<Node> getChild(){
         return _child;
     }
+   
+    public Piece getPiece(){
+        return _piece;
+    }
     
+    public int[] getChoice(){
+        int[] properties = _piece.getProperties();
+        int[] result = {_posX,_posY,properties[0],properties[1],properties[2],properties[3]};
+        return result;
+        
+    }
+    
+    public Node getChild(int x, int y, Piece p){
+        if(!hasChild()){
+            generateChild();
+        }
+        Iterator<Node> it = _child.iterator();
+        Node n =null;
+        while(n == null && it.hasNext()){
+            Node aux = it.next();
+            if(aux._posX == x && aux._posY == y && aux._piece.getNumericValue()==p.getNumericValue())
+                n = aux;
+        }
+        
+        return n;
+    }
     
     public void generateChild(){
         
+        if(!hasChild()){
+            List<Integer> remPositions = _board.getRemainigPositions();
+            List<Integer> remPieces = _board.getRemainingPieces();
+
+            for(int i: remPositions){
+                for(int j : remPieces){
+                    Node n = new Node(i/4,i%4,!_max, new Piece(j), (Board)_board.clone());
+                    addChild(n);
+                }
+            }
+        
+        }
     }
     
     public int heuristic(){
@@ -68,7 +106,7 @@ public class Node {
     
     
     private void updateState(){
-        if (_piece != null){
+        if (_posX != -1){
             _board.setPiece(_piece,_posX,_posY);
             
         }
