@@ -5,6 +5,7 @@
  */
 package Quatro;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +19,7 @@ public class Board  implements Cloneable  {
     public final static int DIM_Y =4;
     
     private int[][] _board;
-    
-    
+
     public Board(){
         _board= new int[DIM_X][DIM_Y];
         

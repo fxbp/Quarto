@@ -16,9 +16,7 @@ public class Node {
     
     private int _posX;
     private int _posY;
-    private boolean _player; //true = player 1, false = player2
-    private boolean _isLeaf;
-    private boolean _isQuarto;
+    private boolean _max; 
     private Piece _piece;
     private List<Node> _child;  
     private Board _board;
@@ -27,29 +25,52 @@ public class Node {
         this(-1,-1,true,null, board);
     }
     
-    public Node(int x, int y, boolean player, Piece p, Board board){
+    public Node(int x, int y, boolean max, Piece p, Board board){
         _piece=p;
         _posX=x;
         _posY=y;
-        _player=player;
+        _max=max;
         _child= new ArrayList();
-        _isLeaf = true;
         _board=board;
-        _isQuarto=false;
         updateState();
+    }
+    
+    public boolean isMax(){
+        return _max;
+    }
+    
+    public boolean hasChild(){
+        return _child.size()>0;
+    }
+    
+    public List<Node> getChild(){
+        return _child;
+    }
+    
+    
+    public void generateChild(){
+        
+    }
+    
+    public int heuristic(){
+        boolean isQuarto = _board.isQuarto(_posX, _posY);
+        if (isQuarto && _max)
+            return 1;
+        else if(isQuarto)
+            return -1;
+        else 
+            return 0;
     }
     
     public void addChild(Node n){
         _child.add(n);
-        _isLeaf=false;
     }
     
     
     private void updateState(){
         if (_piece != null){
             _board.setPiece(_piece,_posX,_posY);
-            _isQuarto = _board.isQuarto(_posX, _posY);
-            _isLeaf = _isQuarto || _isLeaf;
+            
         }
     }
 
