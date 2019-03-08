@@ -42,7 +42,7 @@ public class Player1 {
         int numericPlayPiece = colorin*8+formain*4+foratin*2+tamanyin;
         updateState(numericPlayPiece);
         MiniMax solver = new MiniMax();
-        int nextDepth = _depth + 1;
+        int nextDepth = _depth + 2;
         if (nextDepth > MAX_DEPTH) nextDepth = MAX_DEPTH;
         solver.eval(_root, _depth, nextDepth);
         _depth++;
@@ -117,8 +117,8 @@ public class Player1 {
     private void updateState(int piece){
         //si la peça que li he donat es null he de trobar la primera que ha posat ell, si no buscare on ha posat
         int x=0, y=0;
-        while(x < meutaulell.getX() && y < meutaulell.getY() && meutaulell.getpos(x,y)==-1 && 
-                (_givenPiece == null || meutaulell.getpos(x, y)==_givenPiece.getValue())){
+        while(x < meutaulell.getX() && y < meutaulell.getY() && 
+                (_givenPiece == null  && meutaulell.getpos(x,y)==-1 || meutaulell.getpos(x, y)!=_givenPiece.getValue())){
             
             if (y+1 >= meutaulell.getY())
                 x++;
@@ -151,7 +151,7 @@ public class Player1 {
         if(_root == null){
             Board b;
             if(_givenPiece==null){
-                _availables.remove(_availables.indexOf(piece));
+               // _availables.remove(_availables.indexOf(piece));
                 b= new Board(_positions,_availables);
             }
             else{

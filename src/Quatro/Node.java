@@ -6,8 +6,10 @@
 package Quatro;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -33,7 +35,7 @@ public class Node {
         _max=max;
         _child= new ArrayList();
         _board=board;
-        updateState();
+        //updateState();
     }
     
     public boolean isMax(){
@@ -79,10 +81,16 @@ public class Node {
         if(!hasChild()){
             List<Integer> remPositions = _board.getRemainigPositions();
             List<Integer> remPieces = _board.getRemainingPieces();
-
+            remPieces.remove(remPieces.indexOf(_piece.getNumericValue()));
             for(int i: remPositions){
                 for(int j : remPieces){
-                    Node n = new Node(i/4,i%4,!_max, new Piece(j), (Board)_board.clone());
+                    Board b = (Board)_board.clone();
+                    int x = i/4;
+                    int y = i%4;
+                    b.setPiece(_piece, x,y);
+                    
+                    Node n = new Node(x,y,!_max, new Piece(j), b);
+                    
                     addChild(n);
                 }
             }
