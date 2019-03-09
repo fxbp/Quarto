@@ -22,8 +22,8 @@ public class MiniMax {
         return _bestNode;
     }
     
-    public int eval(Node actual, int actualDepth, int depthToReach){
-        if (actualDepth == depthToReach) 
+    private int eval(Node actual, int actualDepth, int depthToReach, int firstDepth){
+         if (actualDepth == depthToReach) 
             return actual.heuristic();
         
         actual.generateChild();
@@ -32,26 +32,34 @@ public class MiniMax {
         
         int best;
         if(actual.isMax()){
-            best =-1;
+            best =-2;
             for(Node n : actual.getChild()){
-                int value = eval(n,actualDepth+1,depthToReach);
-                if (value > best){
-                    _bestNode = n;
+                int value = eval(n,actualDepth+1,depthToReach,firstDepth);
+                if (value > best){                   
                     best = value;
+                    if(actualDepth == firstDepth){
+                         _bestNode = n;
+                    }
                 }
             }
         }
         else{
             best = 10;
             for(Node n : actual.getChild()){
-                int value = eval(n,actualDepth+1,depthToReach);
+                int value = eval(n,actualDepth+1,depthToReach,firstDepth);
                 if (value < best){
-                    _bestNode = n;
                     best = value;
+                     if(actualDepth == firstDepth){
+                         _bestNode = n;
+                    }
                 }
             }
         }
         return best;
+    }
+    
+    public void eval(Node actual, int actualDepth, int depthToReach){
+        eval(actual,actualDepth,depthToReach,actualDepth);
         
     }
     

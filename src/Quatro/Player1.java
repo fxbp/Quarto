@@ -3,6 +3,7 @@ package Quatro;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 
@@ -23,6 +24,7 @@ public class Player1 {
     private Node _root;
     
     private int _depth;
+    private int _next;
     
     Player1(Tauler entrada){
         meutaulell = entrada;
@@ -31,8 +33,10 @@ public class Player1 {
         initializePieces();
         _givenPiece = null;        
         _root= null;
-        _depth = 1;
-    }
+        _depth = 0;
+        _next =2;
+        
+   }
     public int[] tirada(int colorin, int formain, int foratin, int tamanyin){
      //colorin - Color de la peça a colocar -> 	0 = Blanc 	1 = Negre
      //formain - Forma de la peça a colocar -> 	0 = Rodona 	1 = Quadrat
@@ -42,10 +46,17 @@ public class Player1 {
         int numericPlayPiece = colorin*8+formain*4+foratin*2+tamanyin;
         updateState(numericPlayPiece);
         MiniMax solver = new MiniMax();
-        int nextDepth = _depth + 2;
+        int nextDepth = _depth + _next;
         if (nextDepth > MAX_DEPTH) nextDepth = MAX_DEPTH;
+        if (_depth>=10){
+            int i =1;
+        }
         solver.eval(_root, _depth, nextDepth);
         _depth++;
+        if(_depth>=7)
+            _next+=2;
+       
+        
         Node best = solver.getBestNode();
         if(best != null){
             _root = best;
@@ -112,6 +123,8 @@ public class Player1 {
             _availables.add(i);
             _positions.add(i);
         }
+       // Collections.shuffle(_availables);
+       // Collections.shuffle(_positions);
     }
     
     private void updateState(int piece){
@@ -153,6 +166,7 @@ public class Player1 {
             if(_givenPiece==null){
                // _availables.remove(_availables.indexOf(piece));
                 b= new Board(_positions,_availables);
+                
             }
             else{
                 b= new Board(_positions,_availables);
@@ -160,7 +174,7 @@ public class Player1 {
                 _depth++;
                
             }
-             _root = new Node(new Piece(piece),b);
+            _root = new Node(new Piece(piece),b);
         }
         else{
             //baixem el nivell segons on hagi colocat la peca el contrari

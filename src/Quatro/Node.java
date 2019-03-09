@@ -83,6 +83,7 @@ public class Node {
             List<Integer> remPieces = _board.getRemainingPieces();
             remPieces.remove(remPieces.indexOf(_piece.getNumericValue()));
             for(int i: remPositions){
+                
                 for(int j : remPieces){
                     Board b = (Board)_board.clone();
                     int x = i/4;
@@ -101,9 +102,9 @@ public class Node {
     public int heuristic(){
         boolean isQuarto = _board.isQuarto(_posX, _posY);
         if (isQuarto && _max)
-            return 1;
-        else if(isQuarto)
             return -1;
+        else if(isQuarto)
+            return 1;
         else 
             return 0;
     }
