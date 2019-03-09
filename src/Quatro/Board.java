@@ -188,30 +188,22 @@ public class Board  implements Cloneable  {
        int[] properties = (new Piece(_board[x][y])).getProperties();
        for(int i=0;i<4;i++){
            //mirem files i columnes;
-           if(i!=y){
-              for(int j=0;j<4;j++){
-                 if(propertiesMatch(properties,j,x,i)){
-                     heuristic++;
-                 } 
+           
+            for(int j=0;j<4;j++){
+              if((i!=y) && propertiesMatch(properties,j,x,i))
+                  heuristic++;
+              if(i!=x && propertiesMatch(properties,j,y,i)){
+                   heuristic++;
               }
-           }
-           if(i!=x){
-                for(int j=0;j<4;j++){
-                 if(propertiesMatch(properties,j,y,i)){
-                     heuristic++;
-                 } 
-              }
-           }
-       }
-       if(x==y || y == 3-x){
-           for(int i =0;i<4;i++){
-               if(i!=x){
-                   if(propertiesMatch(properties,i,i,i))
-                       heuristic++;
-                   else if (propertiesMatch(properties,i,i,3-i))
-                      heuristic++;
-               }
-           }
+              if(x==y || y == 3-x){
+                  if(i!=x){
+                    if(propertiesMatch(properties,i,i,i))
+                        heuristic++;
+                    else if (propertiesMatch(properties,i,i,3-i))
+                        heuristic++;
+                    }
+                }
+            }
        }
        
        return heuristic;

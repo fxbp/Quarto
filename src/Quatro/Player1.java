@@ -34,7 +34,7 @@ public class Player1 {
         _givenPiece = null;        
         _root= null;
         _depth = 0;
-        _next =4;
+        _next =3;
         
    }
     public int[] tirada(int colorin, int formain, int foratin, int tamanyin){
@@ -54,8 +54,8 @@ public class Player1 {
         }
         solver.eval(_root, _depth, nextDepth);
         _depth++;
-        if(_depth>=7)
-            _next+=2;
+        if(_depth>=6)
+            _next =5;
        
         
         Node best = solver.getBestNode();
