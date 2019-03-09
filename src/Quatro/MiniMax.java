@@ -32,7 +32,7 @@ public class MiniMax {
         
         int best;
         if(actual.isMax()){
-            best =-2;
+            best = Integer.MIN_VALUE;
             for(Node n : actual.getChild()){
                 int value = eval(n,actualDepth+1,depthToReach,firstDepth);
                 if (value > best){                   
@@ -42,9 +42,10 @@ public class MiniMax {
                     }
                 }
             }
+           
         }
         else{
-            best = 10;
+            best = Integer.MAX_VALUE;
             for(Node n : actual.getChild()){
                 int value = eval(n,actualDepth+1,depthToReach,firstDepth);
                 if (value < best){
@@ -54,6 +55,7 @@ public class MiniMax {
                     }
                 }
             }
+            best = best*-1;
         }
         return best;
     }

@@ -100,13 +100,21 @@ public class Node {
     }
     
     public int heuristic(){
-        boolean isQuarto = _board.isQuarto(_posX, _posY);
+        boolean isQuarto = _board.isQuarto();
+        
+        
+        int value = _board.heuristicValue(_posX,_posY);
+       
+       /* 
         if (isQuarto && _max)
             return -1;
         else if(isQuarto)
             return 1;
         else 
             return 0;
+        */
+       
+       return value;
     }
     
     public void addChild(Node n){

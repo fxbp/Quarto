@@ -34,7 +34,7 @@ public class Player1 {
         _givenPiece = null;        
         _root= null;
         _depth = 0;
-        _next =2;
+        _next =4;
         
    }
     public int[] tirada(int colorin, int formain, int foratin, int tamanyin){
@@ -45,7 +45,8 @@ public class Player1 {
         
         int numericPlayPiece = colorin*8+formain*4+foratin*2+tamanyin;
         updateState(numericPlayPiece);
-        MiniMax solver = new MiniMax();
+        //MiniMax solver = new MiniMax();
+        AlfaBeta solver = new AlfaBeta();
         int nextDepth = _depth + _next;
         if (nextDepth > MAX_DEPTH) nextDepth = MAX_DEPTH;
         if (_depth>=10){
@@ -64,56 +65,7 @@ public class Player1 {
         }
         _givenPiece = _root.getPiece();
         return _root.getChoice();
-        /*
-        int x,y,color,forma,forat,tamany;
-        color=-1;
-        forma=-1;
-        forat=-1;
-        tamany=-1;
-        boolean trobat=true;
-        
-        while( trobat){
-            //mentres la trobem al taulell genero peçes
-            //La peça que posarem
-            color= (int) java.lang.Math.round( java.lang.Math.random() );
-            forma=(int) java.lang.Math.round( java.lang.Math.random() );
-            forat= (int) java.lang.Math.round( java.lang.Math.random() );
-            tamany= (int) java.lang.Math.round( java.lang.Math.random() );
-
-            trobat = color==colorin && forma==formain && forat==foratin && tamany==tamanyin;
-            
-            int valor= color*1000+forma*100+forat*10+tamany;
-            //busco la peça
-            for(int i=0;i<meutaulell.getX();i++){
-                for(int j=0;j<meutaulell.getY();j++){
-                    if (meutaulell.getpos(i,j) == valor){
-                        trobat=true; 
-                    }
-                }
-            }
-        }
-        
- 
-        //busco una posicio buida on posar la peça
-        for(int i=0;i<meutaulell.getX();i++){
-            for(int j=0;j<meutaulell.getY();j++){
-                if (meutaulell.getpos(i,j) == -1){
-                    return new int[]{i,j,color, forma, forat, tamany}; 
-                }
-            }
-        }
-        
-        //Un retorn per defecte
-        return new int[]{0,0,0,0,0,0};
-        //format del retorn vector de 6 int {posX[0a3], posY[0a3], color[0o1] forma[0o1], forat[0o1], tamany[0o1]}
-        //posX i posY es la posicio on es coloca la peça d'entrada
-        //color forma forat i tamany descriuen la peça que colocara el contrari
-        //color -  	0 = Blanc 	1 = Negre
-        //forma -  	0 = Rodona 	1 = Quadrat
-        //forat - 	0 = No  	1 = Si
-        //tamany -      0 = Petit 	1 = Gran
-        
-        */
+       
     }
     
     
@@ -123,15 +75,15 @@ public class Player1 {
             _availables.add(i);
             _positions.add(i);
         }
-       // Collections.shuffle(_availables);
-       // Collections.shuffle(_positions);
+        Collections.shuffle(_availables);
+        Collections.shuffle(_positions);
     }
     
     private void updateState(int piece){
         //si la peça que li he donat es null he de trobar la primera que ha posat ell, si no buscare on ha posat
         int x=0, y=0;
         while(x < meutaulell.getX() && y < meutaulell.getY() && 
-                (_givenPiece == null  && meutaulell.getpos(x,y)==-1 || meutaulell.getpos(x, y)!=_givenPiece.getValue())){
+                (_givenPiece == null  && meutaulell.getpos(x,y)==-1 || _givenPiece != null && meutaulell.getpos(x, y)!=_givenPiece.getValue())){
             
             if (y+1 >= meutaulell.getY())
                 x++;

@@ -72,7 +72,7 @@ public class Board  implements Cloneable  {
         }
     }
     
-    public boolean isQuarto(int x, int y){
+    public boolean isQuarto(){
        if (guanya(_board[0][0],_board[0][1],_board[0][2],_board[0][3])){
             
             return true;
@@ -181,4 +181,46 @@ public class Board  implements Cloneable  {
             return Color == 0 || Color == 4 || Forma==0 || Forma==4 || Forat==0 || Forat==4 || Tamany==0 || Tamany==4;
         }
     }
+   
+   public int heuristicValue(int x, int y){
+
+       int heuristic=0;
+       int[] properties = (new Piece(_board[x][y])).getProperties();
+       for(int i=0;i<4;i++){
+           //mirem files i columnes;
+           if(i!=y){
+              for(int j=0;j<4;j++){
+                 if(propertiesMatch(properties,j,x,i)){
+                     heuristic++;
+                 } 
+              }
+           }
+           if(i!=x){
+                for(int j=0;j<4;j++){
+                 if(propertiesMatch(properties,j,y,i)){
+                     heuristic++;
+                 } 
+              }
+           }
+       }
+       if(x==y || y == 3-x){
+           for(int i =0;i<4;i++){
+               if(i!=x){
+                   if(propertiesMatch(properties,i,i,i))
+                       heuristic++;
+                   else if (propertiesMatch(properties,i,i,3-i))
+                      heuristic++;
+               }
+           }
+       }
+       
+       return heuristic;
+   }
+   
+   private boolean propertiesMatch(int[] properties, int property, int x, int y){
+       Piece p = new Piece(_board[x][y]);
+       
+       return p.getNumericValue() !=-1 && properties[property] == p.getProperties()[property];
+   }
+   
 }
