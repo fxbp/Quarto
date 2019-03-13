@@ -6,10 +6,8 @@
 package Quatro;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -54,6 +52,10 @@ public class Node {
         return _piece;
     }
     
+    public boolean isQuarto(){
+        return heuristic() ==1000;
+    }
+    
     public int[] getChoice(){
         int[] properties = _piece.getProperties();
         int[] result = {_posX,_posY,properties[0],properties[1],properties[2],properties[3]};
@@ -69,7 +71,7 @@ public class Node {
         Node n =null;
         while(n == null && it.hasNext()){
             Node aux = it.next();
-            if(aux._posX == x && aux._posY == y && aux._piece.getNumericValue()==p.getNumericValue())
+            if(aux._posX == x && aux._posY == y  && aux._piece.getNumericValue()==p.getNumericValue())
                 n = aux;
         }
         
@@ -83,16 +85,22 @@ public class Node {
             List<Integer> remPieces = _board.getRemainingPieces();
             remPieces.remove(remPieces.indexOf(_piece.getNumericValue()));
             for(int i: remPositions){
-                
-                for(int j : remPieces){
+                int x = i/4;
+                int y = i%4;
+                for(int j : remPieces)
+                {
+                    Piece p =new Piece(j);                   
                     Board b = (Board)_board.clone();
-                    int x = i/4;
-                    int y = i%4;
-                    b.setPiece(_piece, x,y);
-                    
-                    Node n = new Node(x,y,!_max, new Piece(j), b);
-                    
+                    b.setPiece(_piece, x,y, (_max?1:2));
+                    Node n = new Node(x,y,!_max, p, b);
                     addChild(n);
+                    
+                }
+                if (remPieces.size()==0){                                     
+                    Board b = (Board)_board.clone();
+                    b.setPiece(_piece, x,y, (_max?1:2));
+                    Node n = new Node(x,y,!_max, new Piece(16), b);
+                    addChild(n); 
                 }
             }
         
@@ -120,12 +128,7 @@ public class Node {
     }
     
     
-    private void updateState(){
-        if (_posX != -1){
-            _board.setPiece(_piece,_posX,_posY);
-            
-        }
-    }
+    
 
    
     

@@ -25,8 +25,9 @@ public class Player1 {
     
     private int _depth;
     private int _next;
+    private boolean _player1;
     
-    Player1(Tauler entrada){
+    public Player1(Tauler entrada){
         meutaulell = entrada;
         _availables = new ArrayList();
         _positions = new ArrayList();
@@ -35,6 +36,7 @@ public class Player1 {
         _root= null;
         _depth = 0;
         _next =3;
+        _player1=false;
         
    }
     public int[] tirada(int colorin, int formain, int foratin, int tamanyin){
@@ -47,16 +49,24 @@ public class Player1 {
         updateState(numericPlayPiece);
         //MiniMax solver = new MiniMax();
         AlfaBeta solver = new AlfaBeta();
+        
         int nextDepth = _depth + _next;
-        if (nextDepth > MAX_DEPTH) nextDepth = MAX_DEPTH;
-        if (_depth>=10){
-            int i =1;
-        }
-        solver.eval(_root, _depth, nextDepth);
+        if (nextDepth >= MAX_DEPTH) nextDepth = MAX_DEPTH;
+
+        
+        int evalResult = solver.eval(_root, _depth, nextDepth);
+        //System.out.println("Nivell: " + _depth + " Seguent: "+ nextDepth + "punt: "+_root.heuristic());
+        
+        
+            
         _depth++;
-        if(_depth>=6)
-            _next =5;
-       
+        
+        if(_depth>=8)
+            _next=MAX_DEPTH;
+        else if(_next>=4)
+            _next=4;
+        
+      
         
         Node best = solver.getBestNode();
         if(best != null){
@@ -64,6 +74,11 @@ public class Player1 {
            
         }
         _givenPiece = _root.getPiece();
+        int[] result=_root.getChoice();
+        //System.out.println("Tiro a ["+result[0]+","+result[1]+"] valor: "+evalResult +"; Dono: "+_givenPiece.getValue()+ " Nivell: " + _depth + " Seguent: "+ _next);
+        System.out.println("Tiro a ["+result[0]+","+result[1]+"] valor: "+evalResult +"; Dono: "+_givenPiece.getValue());
+        System.gc();
+        System.gc();
         return _root.getChoice();
        
     }
@@ -114,15 +129,16 @@ public class Player1 {
             
         }
         if(_root == null){
+            
             Board b;
             if(_givenPiece==null){
                // _availables.remove(_availables.indexOf(piece));
                 b= new Board(_positions,_availables);
-                
+                _player1=true;
             }
             else{
                 b= new Board(_positions,_availables);
-                b.setPiece(_givenPiece, x, y);
+                b.setPiece(_givenPiece, x, y,2);
                 _depth++;
                
             }
@@ -130,7 +146,7 @@ public class Player1 {
         }
         else{
             //baixem el nivell segons on hagi colocat la peca el contrari
-            _root = _root.getChild(x,y,new Piece(piece));
+            _root = _root.getChild(x,y, new Piece(piece));
             _depth++;
         }
     }
