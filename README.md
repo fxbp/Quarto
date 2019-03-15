@@ -5,6 +5,7 @@
 
 Implementació d'un algorimte Minimax per tal que el player (màquina)  pugui jugar al Quarto amb un altre IA.
 
+
 [Explicació del Quarto]( https://es.wikipedia.org/wiki/Quarto_(juego))
 
 ## Entorn Bàsic
@@ -69,4 +70,6 @@ Gràcies a que l'algoritme AlfaBeta anirà podant totes aquelles branques que no
 Aquests nivells inicials estan encara una mica limitats segons la representació que es faci de l'estat. D'altra banda permet baixar fins al final despres d'uns quants moviments.
 
 ## Heurístic
+
+
 
