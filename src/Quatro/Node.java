@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Quatro;
 
 import java.util.ArrayList;
@@ -107,18 +103,9 @@ public class Node {
         }
     }
     
-    public int heuristic(){
-        //boolean isQuarto = _board.isQuarto();
+    public int heuristic(){             
         
-        
-        int value = _board.heuristicValue(_posX,_posY);
-       
-        /*
-        if (_max)
-            return -value;
-        else 
-            return value;
-        */
+        int value = _board.heuristicValue(_posX,_posY);           
         
         return value;
     }

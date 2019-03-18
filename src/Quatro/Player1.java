@@ -47,7 +47,7 @@ public class Player1 {
         
         int numericPlayPiece = colorin*8+formain*4+foratin*2+tamanyin;
         updateState(numericPlayPiece);
-        //MiniMax solver = new MiniMax();
+       
         AlfaBeta solver = new AlfaBeta();
         
         int nextDepth = _depth + _next;
@@ -55,9 +55,7 @@ public class Player1 {
 
         
         int evalResult = solver.eval(_root, _depth, nextDepth);
-        //System.out.println("Nivell: " + _depth + " Seguent: "+ nextDepth + "punt: "+_root.heuristic());
-        
-        
+       
             
         _depth++;
         
@@ -75,8 +73,7 @@ public class Player1 {
         }
         _givenPiece = _root.getPiece();
         int[] result=_root.getChoice();
-        //System.out.println("Tiro a ["+result[0]+","+result[1]+"] valor: "+evalResult +"; Dono: "+_givenPiece.getValue()+ " Nivell: " + _depth + " Seguent: "+ _next);
-        System.out.println("Tiro a ["+result[0]+","+result[1]+"] valor: "+evalResult +"; Dono: "+_givenPiece.getValue());
+       
         System.gc();
         System.gc();
         return _root.getChoice();
@@ -107,13 +104,7 @@ public class Player1 {
         
         if (x < meutaulell.getX() && y < meutaulell.getY()){
             if (_givenPiece == null){
-                /*
-                String binary = String.format("%04d", new BigInteger(Integer.toBinaryString(meutaulell.getpos(x,y))));
-                _givenPiece = new Piece(Character.getNumericValue(binary.charAt(0)),
-                                        Character.getNumericValue(binary.charAt(1)),
-                                        Character.getNumericValue(binary.charAt(2)),
-                                        Character.getNumericValue(binary.charAt(3)));
-               */
+                
                 int value = meutaulell.getpos(x, y);
                 int v8=value/1000*8;
                 value = value%1000;
@@ -124,9 +115,7 @@ public class Player1 {
                         
                 _givenPiece = new Piece(v8+v4+v2+v1);
             }
-           // _availables.remove(_availables.indexOf(_givenPiece.getNumericValue()));
-           // _positions.remove(_positions.indexOf(x*4+y));
-            
+           
         }
         if(_root == null){
             
