@@ -64,7 +64,7 @@ public class Player1 {
         if(_depth>=8)
             _next=MAX_DEPTH;
         else if(_next>=4)
-            _next=4;
+            _next+=1;
         
       
         

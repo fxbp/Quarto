@@ -181,32 +181,25 @@ public class Board  implements Cloneable  {
                     else
                         cols+=_columns[i][0]*100;      
             }
-            /*
+            
             if(_invDiagonal[0]==_invDiagonal[i+1] || _invDiagonal[0]>0 &&_invDiagonal[i+1]==0)
                     if(_invDiagonal[0]==3 && _invDiagonal[5]== 1 )
-                        diagonal-=_invDiagonal[0]*250;
+                        diagonal-=_invDiagonal[0]*350;
                     else if(_invDiagonal[0]==2 && _invDiagonal[5]== 1 || _invDiagonal[0]==3 && _invDiagonal[5]== 2 )
                         diagonal+=_invDiagonal[0]*200;
                     else
-                        diagonal+=_invDiagonal[0]*10; 
+                        diagonal+=_invDiagonal[0]*100; 
              if(_diagonal[0]==_diagonal[i+1] || _diagonal[0]>0 &&_diagonal[i+1]==0)
                     if(_diagonal[0]==3 && _diagonal[5]== 1 )
-                        diagonal-=_diagonal[0]*250;
+                        diagonal-=_diagonal[0]*350;
                     else if(_diagonal[0]==2 && _diagonal[5]== 1 || _diagonal[0]==3 && _diagonal[5]== 2 )
                         diagonal+=_diagonal[0]*200;
                     else
-                         diagonal+=_diagonal[0]*10;
-            */
+                         diagonal+=_diagonal[0]*100;
             
-       }
-       
-       //tractar diagonals
-       
-        /*
-        for(int k=1;k<5;k++){
-             
-        }
-       */
+            
+       }       
+      
        return cols+rows+diagonal;
    }
      
